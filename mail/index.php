@@ -31,6 +31,7 @@ foreach ($emailData as $k => $val) {
 
     $email_content_id = $val['email_content_id'];
     $emailContentData = getEmailContent($email_content_id);
+    $tmp['content_id'] = $emailContentData[0]['id'];
     $tmp['title'] =  mb_substr($emailContentData[0]['title'], 0, 30);
     $tmp['mail_text'] = mb_substr($emailContentData[0]['mail_text'], 0, 100);
 
@@ -94,7 +95,7 @@ foreach ($emailData as $k => $val) {
                             <td><?php echo $val['type'];?></td>
                             <td><?php echo $val['created_at'];?></td>
                             <td><?php echo $val['account_list'];?></td>
-                            <td><?php echo $val['title'];?></td>
+                            <td><a href="/management/mail/detail/?id=<?php echo $val['content_id'];?>"><?php echo $val['title'];?></a></td>
                             <td style="white-space:pre-wrap;"><?php echo $val['mail_text'];?></td>
                         </tr>
                  <?php endforeach;?>
