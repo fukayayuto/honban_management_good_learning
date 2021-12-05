@@ -1,0 +1,8 @@
+
+
+AuthType Basic
+AuthUserFile /Applications/MAMP/htdocs/hondan_good_learning/management/.htpasswd
+AuthName "Please enter your ID and password"
+require valid-user
+
+RewriteRule ^reservation/detail/?1 http://localhost:8888/management/reservation/detail.php
