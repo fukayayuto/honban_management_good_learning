@@ -9,7 +9,7 @@ if(isset($_GET['id'])) {
     $reservation_id = (int) $_GET['id'];
 }
 
-$data = [];
+$data = array();
 
 $reservation_date = getReservation($reservation_id);
 $data['id'] = $reservation_date['id'];
@@ -35,7 +35,7 @@ switch ($reservation_date['place']) {
         break;
 }
 
-$entry_data = [];
+$entry_data = array();
 $entry = getEntry($reservation_date['id']);
 $count = 0;
 

@@ -46,6 +46,25 @@ function getAccount($id){
     
 }
 
+function getAccountAll(){
+    
+    $pdo = dbConect();
+
+    $stmt = $pdo->prepare("SELECT * FROM accounts ORDER BY ID DESC");
+    $res = $stmt->execute();
+
+    if( $res ) {
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    $pdo = null;
+
+    return $data;
+
+    
+}
+
+
 
 
 

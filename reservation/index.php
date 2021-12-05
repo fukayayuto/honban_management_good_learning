@@ -5,10 +5,10 @@ require "../db/reservation_settings.php";
 require "../db/entries.php"; 
 
 $reservation_data = getAllData();
-$data = [];
+$data = array();
 
 foreach ($reservation_data as $k => $val) {
-    $tmp = [];
+    $tmp = array();
     $tmp['id'] = $val['id'];
     $tmp['start_date'] = $val['start_date'];
     $tmp['progress'] = $val['progress'];
