@@ -63,7 +63,7 @@ function emailContentStore($title, $mail_text){
 function emailStore($adress_id, $email_content_id){
     
    $pdo = dbConect();
-   
+
     $stmt = $pdo->prepare("INSERT INTO emails (
             adress_id, email_content_id, type
         ) VALUES (
@@ -78,6 +78,57 @@ function emailStore($adress_id, $email_content_id){
 
     return $res;
 }
+
+function getEmailAll(){
+    
+    $pdo = dbConect();
+ 
+     $stmt = $pdo->prepare("SELECT * FROM emails ORDER BY id DESC");
+     $res = $stmt->execute();
+
+     if( $res ) {
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+     }
+ 
+     $pdo = null;
+ 
+     return $data;
+ }
+
+ function getEmailContent($id){
+    
+    $pdo = dbConect();
+
+    $stmt = $pdo->prepare("SELECT * FROM email_contents WHERE id = :id");
+    $stmt->bindValue(':id', $id, PDO::PARAM_STR);
+    $res = $stmt->execute();
+
+    if( $res ) {
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+     
+     $pdo = null;
+ 
+     return $data;
+}
+
+function getAccountList($adress_id){
+    
+    $pdo = dbConect();
+
+    $stmt = $pdo->prepare("SELECT * FROM adress_lists WHERE adress_id = :adress_id");
+    $stmt->bindValue(':adress_id', $adress_id, PDO::PARAM_INT);
+    $res = $stmt->execute();
+
+    if( $res ) {
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+     
+     $pdo = null;
+ 
+     return $data;
+}
+
 
 
 
