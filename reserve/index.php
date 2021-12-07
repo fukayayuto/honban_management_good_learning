@@ -3,40 +3,8 @@
 ini_set('display_errors', "On");
 require "../db/reservation_settings.php"; 
 require "../db/reservation.php"; 
-require "../db/entries.php"; 
 
-$reservation_data = getAllData();
-$data = array();
-
-foreach ($reservation_data as $k => $val) {
-    $tmp = array();
-    $tmp['id'] = $val['id'];
-    $tmp['start_date'] = $val['start_date'];
-    $tmp['updated_at'] = $val['updated_at'];
-    $tmp['display_flg'] = $val['display_flg'];
-    $tmp['place'] = $val['place'];
-
-    $reserve_data = getReservatinData($val['place']);
-    $tmp['progress'] = $reserve_data['progress'];
-    $tmp['count'] = $reserve_data['count'];
-    $tmp['name'] = $reserve_data['name'];
-
-    $entry = getEntry($val['id']);
-
-    $count = 0;
-  
-    if(!empty($entry)){
-        foreach ($entry as $item) {
-            $count = $count + $item['count'];
-        }
-    }
-    $tmp['left_seat'] = $tmp['count'] - $count;
-
-    $data[$k] = $tmp;
-    
-}
-
-
+$reserve_data = getReserveAll();
 
 ?>
 
@@ -111,72 +79,37 @@ foreach ($reservation_data as $k => $val) {
         <h1 class="h2">予約状況管理</h1>
       </div>
 
-      <div class="container">
-        <form action="store.php" method="post">
-            <select name="place" id="place">
-                <option value="1">初任者講習</option>
-                <option value="11">三重県会場</option>
-                <option value="21">京都会場</option>
-            </select>
-            開始日：<input type="date" name="start_date" id="start_date" required>
-            所用日数：<input type="number" name="progress" id="progress" min="1" max="100" required>
-            席数：<input type="number" name="count" id="count" min="1" max="100" required>
-            <button class="submit">新規登録</button>
-        </form>
-    </div>
 
-    <div class="container" id="users">
-        <table class="table">
-            <thead>
-                <tr class="success">
-                    <th>ID</th>
-                    <th>予約会場</th>
-                    <th class="sort" data-sort="id">開始日</th>
-                    <th>所用日数</th>
-                    <th>定員枠</th>
-                    <th>残り定員枠</th>
-                    <th>更新日時</th>
-                    <th>表示フラグ</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
+      
 
-            <tbody>
-                <?php foreach ($data as $val):?>
-                <tr>
-                    <td><?php echo $val['id'];?></td>
-                    <td><?php echo $val['name'];?></td>
-                    <td><?php echo $val['start_date'];?></td>
-                    <td><?php echo $val['progress'];?></td>
-                    <td><?php echo $val['count'];?></td>
-                    <td><?php echo $val['left_seat'];?></td>
-                    <td><?php echo $val['updated_at'];?></td>
-                    
-                    <?php if($val['display_flg'] == 1) :?>
-                        <td>表示</td>
-                    <?php else :?>
-                        <td>非表示</td>
-                    <?php endif;?>
+      <div class="card-deck mb-3 text-center">
+      <?php foreach ($reserve_data as $val):?>
+        <?php 
+        $place = $val['id'];
+        if($place == 1){
+            $place = 'member';
+        }elseif($place == 2){
+            $place = 'nomember';
+        }elseif($place == 11){
+            $place = 'mie';
+        }
+        ?>
+        <div class="card mb-4 shadow-sm">
 
-                    <td><a href="/management/reservation/entry?id=<?php echo $val['id'];?>"><button type="button" class="btn btn-primary">エントリー表示</button></a></td>
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal"><?php echo $val['name'];?></h4>
+                <img src="../common/img/management/<?php echo $val['image'];?>" alt="予約画像">
+            </div>
+            <div class="card-body">    
+            　　 <a href="/management/reserve/<?php echo $place;?>">
+                    <button type="button" class="btn btn-lg btn-block btn-outline-primary">予約状況確認</button>
+                </a>
+             </div>
+        </div>
+        <?php endforeach;?>
+      </div>
 
-                    <?php if($val['place'] == 2) :?>
-                        <td></td>
-                    <?php else :?>
-                        <td><a href="/management/reservation/detail?id=<?php echo $val['id'];?>"><button type="button" class="btn btn-warning">変更</button></a></td>
-                    <?php endif;?>
-
-                </tr>
-                <?php endforeach;?>
-            </tbody>
-
-
-
-          
-        </table>
-    </div>
-
+      
 
 
 
@@ -204,5 +137,3 @@ foreach ($reservation_data as $k => $val) {
 <script src="/docs/4.4/assets/js/src/ie-emulation-modes-warning.js"></script>
   </body>
 </html>
-
-

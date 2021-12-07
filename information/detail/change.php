@@ -13,7 +13,6 @@ $link = $_POST['link'];
 $link_part = $_POST['link_part'];
 $display_flg = $_POST['display_flg'];
 
-
 $res = updateInformation($title,$link,$link_part,$display_flg,$id);
 
 if(!$res){

@@ -40,5 +40,23 @@ function getEntry($id){
     return $data;
 }
 
+function selectAccount($account_id){
+    
+    $pdo = dbConect();
+
+    $stmt = $pdo->prepare("SELECT * FROM entries WHERE account_id = :account_id ");
+    $stmt->bindValue(':account_id', $account_id, PDO::PARAM_INT);
+    $res = $stmt->execute();
+
+    $data = null;
+    
+    if( $res ) {
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    $pdo = null;
+
+    return $data;
+}
+
 
 ?>

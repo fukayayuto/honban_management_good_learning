@@ -126,9 +126,13 @@ switch ($reservation_date['place']) {
             <div class="form-group">
                 <label>予約名</label>
                 <select name="place" id="place" class="form-control">
-                    <option value="1" <?php if ($data['place_id'] == 1) {echo 'selected';} ?>>初任者講習</option>
-                    <option value="11" <?php if ($data['place_id'] == 11) {echo 'selected';} ?>>三重県会場</option>
-                    <option value="21" <?php if ($data['place_id'] == 21) {echo 'selected';} ?>>京都会場</option>
+                    <?php if($data['place_id'] == 1):?>
+                        <option value="1">初任者講習</option>
+                    <?php elseif($data['place_id'] == 11):?>
+                      <option value="11">三重県会場</option>
+                    <?php else:?>
+                      <option value="21">京都会場</option>
+                    <?php endif;?>
                 </select>
             </div>
             <div class="form-group">

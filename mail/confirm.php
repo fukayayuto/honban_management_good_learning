@@ -57,12 +57,12 @@ $mail_text = $_POST['mail_text'];
 
             <div class="form-group">
                 <label>タイトル</label><br>
-                <label><?php echo $title;?><</label><br>
+                <label><?php echo $title;?></label><br>
             </div>
 
             <div class="form-group">
                 <label>メール本文</label><br>
-                <label><?php echo $mail_text;?><</label><br>
+                <label　style="white-space:pre-wrap;"><?php echo $mail_text;?></label><br>
             </div>
 
             <button type="submit">送信する</button>

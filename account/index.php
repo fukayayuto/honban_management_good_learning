@@ -1,45 +1,28 @@
 <?php
 
 ini_set('display_errors', "On");
-require "../db/reservation_settings.php"; 
-require "../db/reservation.php"; 
-require "../db/entries.php"; 
+require_once "../db/accounts.php"; 
 
-$reservation_data = getAllData();
+$account_data = getAccountAll();
 $data = array();
 
-foreach ($reservation_data as $k => $val) {
+foreach ($account_data as $k => $val) {
     $tmp = array();
     $tmp['id'] = $val['id'];
-    $tmp['start_date'] = $val['start_date'];
-    $tmp['updated_at'] = $val['updated_at'];
-    $tmp['display_flg'] = $val['display_flg'];
-    $tmp['place'] = $val['place'];
-
-    $reserve_data = getReservatinData($val['place']);
-    $tmp['progress'] = $reserve_data['progress'];
-    $tmp['count'] = $reserve_data['count'];
-    $tmp['name'] = $reserve_data['name'];
-
-    $entry = getEntry($val['id']);
-
-    $count = 0;
-  
-    if(!empty($entry)){
-        foreach ($entry as $item) {
-            $count = $count + $item['count'];
-        }
+    $tmp['name'] = $val['name'];
+    $tmp['email'] = $val['email'];
+    $tmp['company_name'] = $val['company_name'];
+    $tmp['sales_office'] = '';
+    if(!empty($val['sales_office'])){
+        $tmp['sales_office'] = $val['sales_office'];
     }
-    $tmp['left_seat'] = $tmp['count'] - $count;
-
-    $data[$k] = $tmp;
+    $tmp['phone'] = $val['phone'];
+    $tmp['updated_at'] = $val['updated_at'];
     
+    $data[$k] = $tmp;
 }
 
-
-
 ?>
-
 
 <html lang="ja" >
   <head>
@@ -48,6 +31,11 @@ foreach ($reservation_data as $k => $val) {
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP&display=swap" rel="stylesheet">
     <link href="dashboard.css" rel="stylesheet">
     <link href="../example.css" rel="stylesheet">
+    <link href='http://localhost:8888/management/fullcalendar-5.10.1/lib/main.css' type="text/css" rel='stylesheet' />
+    <link href='http://localhost:8888/management/fullcalendar-5.10.1/lib/main.min.css' type="text/css" rel='stylesheet' />
+ 
+    <script src="http://localhost:8888/management/fullcalendar-5.10.1/lib/main.js"></script>
+    <script src="http://localhost:8888/management/fullcalendar-5.10.1/lib/main.min.js"></script>
 
   </head>
   <body >
@@ -79,15 +67,15 @@ foreach ($reservation_data as $k => $val) {
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/management/mail">
-              <span data-feather="shopping-cart"></span>
+            <a class="nav-link" href="/management/account">
+              <span data-feather="users"></span>
               <!-- Products -->
               顧客
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/management/user">
-              <span data-feather="users"></span>
+            <a class="nav-link" href="/management/mail">
+              <span data-feather="mail"></span>
               <!-- Customers -->
               メール配信
             </a>
@@ -104,86 +92,46 @@ foreach ($reservation_data as $k => $val) {
        
     </nav>
 
-    <!-- 編集部分 -->
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <!-- <h1 class="h2">Dashboard</h1> -->
-        <h1 class="h2">予約状況管理</h1>
+        <h1 class="h2">管理画面</h1>
       </div>
 
       <div class="container">
-        <form action="store.php" method="post">
-            <select name="place" id="place">
-                <option value="1">初任者講習</option>
-                <option value="11">三重県会場</option>
-                <option value="21">京都会場</option>
-            </select>
-            開始日：<input type="date" name="start_date" id="start_date" required>
-            所用日数：<input type="number" name="progress" id="progress" min="1" max="100" required>
-            席数：<input type="number" name="count" id="count" min="1" max="100" required>
-            <button class="submit">新規登録</button>
-        </form>
-    </div>
-
-    <div class="container" id="users">
         <table class="table">
             <thead>
                 <tr class="success">
-                    <th>ID</th>
-                    <th>予約会場</th>
-                    <th class="sort" data-sort="id">開始日</th>
-                    <th>所用日数</th>
-                    <th>定員枠</th>
-                    <th>残り定員枠</th>
+                    <th>ユーザーID</th>
+                    <th>氏名</th>
+                    <th>メールアドレス</th>
+                    <th>会社名</th>
+                    <th>営業所</th>
+                    <th>電話番号</th>
                     <th>更新日時</th>
-                    <th>表示フラグ</th>
-                    <th></th>
-                    <th></th>
                 </tr>
             </thead>
 
             <tbody>
-                <?php foreach ($data as $val):?>
-                <tr>
-                    <td><?php echo $val['id'];?></td>
-                    <td><?php echo $val['name'];?></td>
-                    <td><?php echo $val['start_date'];?></td>
-                    <td><?php echo $val['progress'];?></td>
-                    <td><?php echo $val['count'];?></td>
-                    <td><?php echo $val['left_seat'];?></td>
-                    <td><?php echo $val['updated_at'];?></td>
-                    
-                    <?php if($val['display_flg'] == 1) :?>
-                        <td>表示</td>
-                    <?php else :?>
-                        <td>非表示</td>
-                    <?php endif;?>
-
-                    <td><a href="/management/reservation/entry?id=<?php echo $val['id'];?>"><button type="button" class="btn btn-primary">エントリー表示</button></a></td>
-
-                    <?php if($val['place'] == 2) :?>
-                        <td></td>
-                    <?php else :?>
-                        <td><a href="/management/reservation/detail?id=<?php echo $val['id'];?>"><button type="button" class="btn btn-warning">変更</button></a></td>
-                    <?php endif;?>
-
-                </tr>
-                <?php endforeach;?>
+                <?php foreach ($data as $k => $val) : ?>
+                    <tr>
+                        <td><a href="/management/account/detail/?id=<?php echo $val['id']; ?>"><?php echo $val['id']; ?></a></td>
+                        <td><?php echo $val['name']; ?></td>
+                        <td><?php echo $val['email']; ?></td>
+                        <td><?php echo $val['company_name']; ?></td>
+                        <td><?php echo $val['sales_office']; ?></td>
+                        <td><?php echo $val['phone']; ?></td>
+                        <td><?php echo $val['updated_at']; ?></td>
+                    </tr>
+                <?php endforeach; ?>
             </tbody>
-
-
-
-          
         </table>
-    </div>
-
-
-
-
+   　　</div>
 
     </main>
   </div>
 </div>
+
 
 <!-- Icons -->
 <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
@@ -192,6 +140,7 @@ foreach ($reservation_data as $k => $val) {
 </script>
 
 <!-- Graphs -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script>
@@ -206,3 +155,30 @@ foreach ($reservation_data as $k => $val) {
 </html>
 
 
+<!-- 
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>管理画面</title>
+</head>
+
+<body>
+    <div class="container">
+        <br>
+        <a href="/management/reservation/">予約管理画面</a><br>
+        <a href="/management/information/">インフォメーション管理画面</a><br>
+        <a href="/management/user/">ユーザー管理画面</a><br>
+        <a href="/management/mail/">メール管理画面</a><br>
+    </div>
+</body>
+
+</html> -->

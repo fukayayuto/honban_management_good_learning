@@ -41,15 +41,15 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/management/account">
-              <span data-feather="users"></span>
+            <a class="nav-link" href="/management/mail">
+              <span data-feather="shopping-cart"></span>
               <!-- Products -->
               顧客
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/management/mail">
-              <span data-feather="mail"></span>
+            <a class="nav-link" href="/management/user">
+              <span data-feather="users"></span>
               <!-- Customers -->
               メール配信
             </a>
@@ -70,6 +70,7 @@
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <!-- <h1 class="h2">Dashboard</h1> -->
         <h1 class="h2">管理画面</h1>
+      <a href="/management/reserve/mie/create.php"><button　type="button" class="btn btn-primary">予約作成</button></a>
       </div>
 
       <div id="app">

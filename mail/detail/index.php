@@ -43,13 +43,11 @@ $data['account_list'] = '';
 
 <body>
 
-    <a href="/management/"><button>管理画面一覧へ戻る</button></a><br>
+    <a href="/management/mail"><button>メール履歴一覧</button></a><br>
 
     <div class="container">
-    <a href="/management/mail/select/index"><button> 全員に一斉メールを送信する</button></a>
 
-
-        <h2>インフォメーション詳細変更画面</h2><br>
+        <h2>送信内容</h2><br>
 
         <div class="form-group">
             <label>宛先</label><br>

@@ -92,7 +92,7 @@ $information_data = selectInformation($id);
 
         <form method="POST" action="change.php">
 
-            <input type="hidden" name="id" value="<?php echo $information_data['id'];?>">
+            <input type="hidden" name="id" value="<?php echo $information_data[0]['id'];?>">
        
             <h2>インフォメーション詳細変更画面</h2><br>
 

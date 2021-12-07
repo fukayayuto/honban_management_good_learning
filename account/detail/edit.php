@@ -1,3 +1,28 @@
+<?php
+
+ini_set('display_errors', "On");
+require_once "../../db/accounts.php"; 
+
+
+if(empty($_POST['id'])){
+    header('Location: http://localhost:8888/management/account');
+}
+$id = $_POST['id'];
+
+$account = getAccount($id);
+$name = $account[0]['name'];
+$email = $account[0]['email'];
+$company_name = $account[0]['company_name'];
+$sales_office = $account[0]['sales_office'];
+$phone = $account[0]['phone'];
+$memo = $account[0]['memo'];
+$created_at = $account[0]['created_at'];
+$updated_at = $account[0]['updated_at'];
+
+
+?>
+
+
 <html lang="ja" >
   <head>
     <title>グットラーニング管理画面</title>
@@ -72,42 +97,66 @@
         <h1 class="h2">管理画面</h1>
       </div>
 
-      <div id="app">
-   　　    <div class="m-auto">
-            <div id='calendar'></div>
+
+      <div class="col-md-8 order-md-1">
+      <h4 class="mb-3">顧客編集</h4>
+      <form class="needs-validation" action="update.php" method="post" >
+    　　<input type="hidden" name="id" id="id" value="<?php echo $id;?>">
+        <div class="row">
+          <div class="col-md-12">
+            <label for="lastName">氏名</label>
+            <input type="text" class="form-control" id="name" name="name"  value="<?php echo $name;?>" >
           </div>
-      </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-12">
+            <label for="lastName">メールアドレス</label>
+            <input type="text" class="form-control" id="email" name="email"  value="<?php echo $name;?>" >
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-12">
+            <label for="lastName">会社名</label>
+            <input type="text" class="form-control" id="company_name" name="company_name"  value="<?php echo $company_name;?>" >
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-12">
+            <label for="lastName">営業所</label>
+            <input type="text" class="form-control" id="sales_office" name="sales_office"  value="<?php echo $sales_office;?>" >
+          </div>
+        </div>
+          <br>
+        <div class="row">
+          <div class="col-md-12">
+            <label for="lastName">電話番号</label>
+            <input type="text" class="form-control" id="phone" name="phone"  value="<?php echo $phone;?>" >
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-12">
+            <label for="lastName">顧客メモ</label>
+            <textarea class="form-control" name="memo" id="memo"><?php echo $memo;?></textarea>
+          </div>
+        </div>
+
+        
+        <hr class="mb-4">
+        <button class="btn btn-primary btn-lg btn-block" type="submit">変更する</button>
+      </form>
+    </div>
+
+
+    
 
     </main>
   </div>
 </div>
 
-<script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                locale: 'ja',
-                height: 'auto',
-                firstDay: 1,
-                headerToolbar: {
-                    left: "dayGridMonth",
-                    center: "title",
-                    right: "today prev,next"
-                },
-                buttonText: {
-                    today: '今月',
-                    month: '月',
-                    // list: 'リスト'
-                },
-                noEventsContent: 'スケジュールはありません',
-
-                events: "setEvents.php",
-
-            });
-            calendar.render();
-        });
-    </script>
 
 <!-- Icons -->
 <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
@@ -117,35 +166,6 @@
 
 <!-- Graphs -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-<script>
-  var ctx = document.getElementById("myChart");
-  var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-      datasets: [{
-        data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-        lineTension: 0,
-        backgroundColor: 'transparent',
-        borderColor: '#007bff',
-        borderWidth: 4,
-        pointBackgroundColor: '#007bff'
-      }]
-    },
-    options: {
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: false
-          }
-        }]
-      },
-      legend: {
-        display: false,
-      }
-    }
-  });
-</script>
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script>
@@ -160,30 +180,3 @@
 </html>
 
 
-<!-- 
-<!DOCTYPE html>
-<html lang="ja">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>管理画面</title>
-</head>
-
-<body>
-    <div class="container">
-        <br>
-        <a href="/management/reservation/">予約管理画面</a><br>
-        <a href="/management/information/">インフォメーション管理画面</a><br>
-        <a href="/management/user/">ユーザー管理画面</a><br>
-        <a href="/management/mail/">メール管理画面</a><br>
-    </div>
-</body>
-
-</html> -->

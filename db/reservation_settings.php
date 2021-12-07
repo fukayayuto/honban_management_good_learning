@@ -104,6 +104,59 @@ function updateReservation($place,$start_date,$progress,$count,$display_flg,$id)
     return $res;
 }
 
+function getSelectAll($place){
+    
+    $pdo = dbConect();
+
+    $stmt = $pdo->prepare("SELECT * FROM reservation_settings WHERE place = :place");
+    $stmt->bindValue(':place', $place, PDO::PARAM_INT);
+    $res = $stmt->execute();
+    
+    if( $res ) {
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    $pdo = null;
+
+    return $data;
+}
+
+function reseveStore($place,$start_date){
+    
+    $pdo = dbConect();
+
+    $stmt = $pdo->prepare("INSERT INTO reservation_settings (
+        place, start_date
+    ) VALUES (
+       :place, :start_date
+     )");
+    $stmt->bindValue(':place', $place, PDO::PARAM_INT);
+    $stmt->bindValue(':start_date', $start_date, PDO::PARAM_STR);
+    $res = $stmt->execute();
+
+
+
+    if($place == 1){
+        $stmt = $pdo->prepare("INSERT INTO reservation_settings (
+            place, start_date
+        ) VALUES (
+           :place, :start_date
+         )");
+        $stmt->bindValue(':place', 2, PDO::PARAM_INT);
+        $stmt->bindValue(':start_date', $start_date, PDO::PARAM_STR);
+        $res = $stmt->execute();
+    }
+    
+    $pdo = null;
+
+    return $res;
+}
+
+
+
+
+
+
 
 
 ?>

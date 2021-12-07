@@ -60,13 +60,12 @@ function selectInformation($id){
 function updateInformation($title,$link,$link_part,$display_flg,$id){
     
     $pdo = dbConect();
-    $date = new Datetime();
+    // $date = '21-12-12';
 
-    $stmt = $pdo->prepare("UPDATE information SET  title = :title, link = :link, link_part = :link_part, updated_at = :updated_at, display_flg = :display_flg WHERE  id = :id;");
+    $stmt = $pdo->prepare("UPDATE information SET  title = :title, link = :link, link_part = :link_part, display_flg = :display_flg WHERE  id = :id;");
         $stmt->bindValue(':title', $title, PDO::PARAM_INT);
         $stmt->bindValue(':link', $link, PDO::PARAM_INT);
         $stmt->bindValue(':link_part', $link_part, PDO::PARAM_STR);
-        $stmt->bindValue(':updated_at', $date, PDO::PARAM_INT);
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
         $stmt->bindValue(':display_flg', $display_flg, PDO::PARAM_INT);
         $res = $stmt->execute();

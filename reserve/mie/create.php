@@ -1,3 +1,20 @@
+<?php
+
+ini_set('display_errors', "On");
+require_once "../../db/reservation.php"; 
+
+$reverve_data = getReservatinData(11);
+
+$reservation_name = $reverve_data['name'];
+$progress = $reverve_data['progress'];
+$count= $reverve_data['count'];
+
+
+
+?>
+
+
+
 <html lang="ja" >
   <head>
     <title>グットラーニング管理画面</title>
@@ -41,15 +58,15 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/management/account">
-              <span data-feather="users"></span>
+            <a class="nav-link" href="/management/mail">
+              <span data-feather="shopping-cart"></span>
               <!-- Products -->
               顧客
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/management/mail">
-              <span data-feather="mail"></span>
+            <a class="nav-link" href="/management/user">
+              <span data-feather="users"></span>
               <!-- Customers -->
               メール配信
             </a>
@@ -72,42 +89,46 @@
         <h1 class="h2">管理画面</h1>
       </div>
 
-      <div id="app">
-   　　    <div class="m-auto">
-            <div id='calendar'></div>
+      <div class="col-md-8 order-md-1">
+      <h4 class="mb-3">予約講座作成</h4>
+      <form class="needs-validation" action="store.php" method="post" >
+        <div class="row">
+          <div class="col-md-12">
+            <label for="firstName">講座名: <?php echo $reservation_name;?></label>
           </div>
-      </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-12">
+            <label for="lastName">所用日数: <?php echo $progress;?>日間</label><br>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-12">
+            <label for="lastName">講座枠数: <?php echo $count;?>日間</label><br>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-12">
+            <label for="lastName">開始日</label>
+            <input type="date" class="form-control" id="start_date" name="start_date"  value="" >
+          </div>
+        </div>
+
+        
+        <hr class="mb-4">
+        <button class="btn btn-primary btn-lg btn-block" type="submit">作成</button>
+      </form>
+    </div>
+
+    
 
     </main>
   </div>
 </div>
 
-<script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                locale: 'ja',
-                height: 'auto',
-                firstDay: 1,
-                headerToolbar: {
-                    left: "dayGridMonth",
-                    center: "title",
-                    right: "today prev,next"
-                },
-                buttonText: {
-                    today: '今月',
-                    month: '月',
-                    // list: 'リスト'
-                },
-                noEventsContent: 'スケジュールはありません',
-
-                events: "setEvents.php",
-
-            });
-            calendar.render();
-        });
-    </script>
 
 <!-- Icons -->
 <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
@@ -117,35 +138,6 @@
 
 <!-- Graphs -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-<script>
-  var ctx = document.getElementById("myChart");
-  var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-      datasets: [{
-        data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-        lineTension: 0,
-        backgroundColor: 'transparent',
-        borderColor: '#007bff',
-        borderWidth: 4,
-        pointBackgroundColor: '#007bff'
-      }]
-    },
-    options: {
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: false
-          }
-        }]
-      },
-      legend: {
-        display: false,
-      }
-    }
-  });
-</script>
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script>

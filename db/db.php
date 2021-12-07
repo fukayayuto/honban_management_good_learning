@@ -1,7 +1,7 @@
 <?php
 
 define('HOSTNAME', 'localhost');
-define('DATABASE', 'good_learning');
+define('DATABASE', 'e_learning');
 define('USERNAME', 'root');
 define('PASSWORD', 'root');
 

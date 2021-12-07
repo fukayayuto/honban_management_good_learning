@@ -37,17 +37,18 @@ function adressListStore($adress_id, $account_id){
     return $res;
 }
     
-function emailContentStore($title, $mail_text){
+function emailContentStore($title, $mail_text,$adress_id){
     
        $pdo = dbConect();
 
         $stmt = $pdo->prepare("INSERT INTO email_contents (
-                title, mail_text
+                title, mail_text,adress_id
             ) VALUES (
-               :title, :mail_text
+               :title, :mail_text, :adress_id
              )");
         $stmt->bindValue(':title', $title, PDO::PARAM_STR);
         $stmt->bindValue(':mail_text', $mail_text, PDO::PARAM_STR);
+        $stmt->bindValue(':adress_id', $adress_id, PDO::PARAM_INT);
         $res = $stmt->execute();
 
         $id = 1;
@@ -60,16 +61,15 @@ function emailContentStore($title, $mail_text){
         return $id;
 }
     
-function emailStore($adress_id, $email_content_id){
+function emailStore($email_content_id){
     
-   $pdo = dbConect();
-
+    $pdo = dbConect();
+    
     $stmt = $pdo->prepare("INSERT INTO emails (
-            adress_id, email_content_id, type
+            email_content_id, type
         ) VALUES (
-           :adress_id, :email_content_id,:type
+           :email_content_id,:type
          )");
-    $stmt->bindValue(':adress_id', $adress_id, PDO::PARAM_INT);
     $stmt->bindValue(':email_content_id', $email_content_id, PDO::PARAM_INT);
     $stmt->bindValue(':type', 1, PDO::PARAM_INT);
     $res = $stmt->execute();
