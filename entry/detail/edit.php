@@ -1,25 +1,45 @@
+
 <?php
 
 ini_set('display_errors', "On");
-require_once "../db/accounts.php";
+require_once "../../db/reservation_settings.php";
+require_once "../../db/reservation.php";
+require_once "../../db/entries.php";
+require_once "../../db/accounts.php";
 
-$account_id_list = $_POST['account_id'];
-$account_list = '';
-$data = array();
-
-foreach ($account_id_list as $k => $val) {
-    $tmp = array();
-    $tmp['account_id'] = $val;
-    $account_data = getAccount($val);
-    $account_list .= ',' . $account_data[0]['name'];
-    $data[$k] = $tmp;
+if (empty($_POST['id'])) {
+    header('Location: http://localhost:8888/management/entry');
 }
-$account_list = mb_substr($account_list, 1);
-$title = $_POST['title'];
-$mail_text = $_POST['mail_text'];
+
+
+
+
+$entry_id = $_POST['id'];
+$entry_data = selectEntry($entry_id);
+
+$reservation_data = getReservation($entry_data['reservation_id']);
+
+$reserve_data = getReservatinData($reservation_data['place']);
+
+$reservation_id = $reservation_data['id'];
+$reservation_name = $reserve_data['name'];
+$start_date = $reservation_data['start_date'];
+$created_at = $entry_data['created_at'];
+$status = $entry_data['status'];
+
+$account = getAccount($entry_data['account_id']);
+$account_name = $account[0]['name'];
+$email = $account[0]['email'];
+
+$company_name = $account[0]['company_name'];
+$sales_office = $account[0]['sales_office'];
+$phone = $account[0]['phone'];
+$memo = $account[0]['memo'];
+
+
+
 
 ?>
-
 
 
 <html lang="ja">
@@ -56,10 +76,9 @@ $mail_text = $_POST['mail_text'];
                             <a class="nav-link" href="/management/reserve">
                                 <span data-feather="file"></span>
                                 <!-- Orders -->
-                                予約状況
+                                予約講座
                             </a>
                         </li>
-                      
                         <li class="nav-item">
                             <a class="nav-link" href="/management/account">
                                 <span data-feather="users"></span>
@@ -89,48 +108,55 @@ $mail_text = $_POST['mail_text'];
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <!-- <h1 class="h2">Dashboard</h1> -->
-                    <h1 class="h2">インフォメーション一覧</h1>
                 </div>
 
-                <div class="container">
-
-                    <form action="store.php" method="post">
-
-                        <?php foreach ($data as $val) : ?>
-                            <input type="hidden" name="account_id[]" id="account_id[]" value="<?php echo $val['account_id']; ?> ">
-                        <?php endforeach; ?>
-
-                        <input type="hidden" name="title" id="title" value="<?php echo $title; ?> ">
-                        <input type="hidden" name="mail_text" id="mail_text" value="<?php echo $mail_text; ?> ">
-
-
-                        <div class="form-group">
-                            <label>宛先</label><br>
-                            <p><?php echo $account_list; ?></p>
-                        </div>
-
-                        <div class="form-group">
-                            <label>タイトル</label><br>
-                            <p><?php echo $title; ?></p>
-                        </div>
-
-                        <div class="form-group">
-                            <label>メール本文</label><br>
-                            
-                        </div>
-
-                        <p　style="white-space: pre-wrap;"><?php echo $mail_text; ?></p><br>
-
-                        <button type="submit" class="btn btn-primary">送信する</button>
-
-                    </form>
-
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <!-- <h1 class="h2">Dashboard</h1> -->
+                    <h1 class="h3">エントリー詳細</h1>
                 </div>
 
-            </main>
-        </div>
+
+                <div class="col-md-8 order-md-1">
+                <h4 class="mb-3">予約講座作成</h4>
+                <form class="needs-validation" action="update.php" method="post" >
+                    <input type="hidden" name="id" id="id" value="<?php echo $entry_id;?>">
+                    <div class="row">
+                    <div class="col-md-12">
+                        <label for="firstName">予約講座名: <?php echo $reservation_name;?></label>
+                    </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                    <div class="col-md-12">
+                        <label for="lastName">予約開始日: <?php echo $start_date;?></label><br>
+                    </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                    <div class="col-md-12">
+                        <label for="lastName">ステータス:</label>
+                        <select class="form-control" id="status" name="status" >
+                            <option value="0"　<?php if($status == 0){ echo 'selected';}?>>未確定</option>
+                            <option value="1" <?php if($status == 1){ echo 'selected';}?>>確定</option>
+                            <option value="2" <?php if($status == 2){ echo 'selected';}?>>キャンセル</option>
+                        </select>
+                    </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                    <div class="col-md-12">
+                        <label for="lastName">予約申込日:<?php echo $created_at;?></label>
+                    </div>
+                </div>
+
+        
+        <hr class="mb-4">
+        <button class="btn btn-primary btn-lg btn-block" type="submit">変更する</button>
+      </form>
     </div>
-
+        </div>
+        </main>
+    </div>
 
     <!-- Icons -->
     <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>

@@ -86,13 +86,6 @@ foreach ($entry_data as $k => $val) {
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/management/reservation">
-                <span data-feather="file"></span>
-                <!-- Orders -->
-                予約状況管理
-              </a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link" href="/management/account">
                 <span data-feather="users"></span>
                 <!-- Products -->
@@ -140,7 +133,7 @@ foreach ($entry_data as $k => $val) {
                 <div class="card-body">
                   <label>受講開始日: <?php echo $val['start_date']; ?></label><br>
                   <label>人数: <?php echo $val['count']; ?>人</label>
-                  <button type="button" class="btn btn-lg btn-block btn-outline-primary">予約詳細を見る</button>
+                  <a href="/management/entry/detail/?id=<?php echo $val['id'];?>"><button type="button" class="btn btn-lg btn-block btn-outline-primary">予約詳細を見る</button></a>
                 </div>
               </div>
             </div>

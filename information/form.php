@@ -1,27 +1,12 @@
 <?php
 
 ini_set('display_errors', "On");
-require_once "../db/mail.php"; 
-require_once "../db/accounts.php"; 
+require_once "../db/information.php"; 
 
-if(!empty($_POST)){
-    $check_list = $_POST['check'];
+$information_data = getInformation();
 
-    $account_list = '';
-    $data = array();
-    foreach ($check_list as $k => $val) {
-        $tmp = array();
-        $tmp['account_id'] = $val;
-        $accountData = getAccount($val);
-
-        $account_list .= ',　' . $accountData[0]['name'];
-        $data[$k] = $tmp;
-    }
-    $account_list = mb_substr($account_list,1);
-}
 
 ?>
-
 
     <html lang="ja" >
   <head>
@@ -58,7 +43,7 @@ if(!empty($_POST)){
               予約状況
             </a>
           </li>
-         
+       
           <li class="nav-item">
             <a class="nav-link" href="/management/account">
               <span data-feather="users"></span>
@@ -88,39 +73,45 @@ if(!empty($_POST)){
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <!-- <h1 class="h2">Dashboard</h1> -->
-        <h1 class="h2">メール作成画面</h1>
+        <h1 class="h2">管理画面</h1>
       </div>
 
-
-        <div class="container">
-
-            <form action="confirm.php" method="post">
-
-            <?php foreach ($data as $val):?>
-                <input type="hidden" name="account_id[]" id="account_id[]" value="<?php echo $val['account_id'];?> ">
-            <?php endforeach;?>
-
-                <div class="form-group">
-                    <label>宛先</label><br>
-                    <label><?php echo $account_list;?></label>
-                </div>
-
-                <div class="form-group">
-                    <label>タイトル</label><br>
-                    <input type="text" name="title" id="title" class="form-control" required>
-                </div>
-
-                <div class="form-group">
-                    <label>メール本文</label><br>
-                    <textarea name="mail_text" id="mail_text" rows="22" class="form-control" required></textarea>
-                </div>
-
-                <button type="submit" class="btn btn-primary">確認画面へ</button>
-                
-            </form>
-
+      <div class="col-md-8 order-md-1">
+      <h4 class="mb-3">インフォメーション作成</h4>
+      <form class="needs-validation" action="store.php" method="post" >
+      <div class="row">
+          <div class="col-md-12">
+            <label for="lastName">URL</label>
+            <input type="text" class="form-control" id="link" name="link"  value="" >
+          </div>
         </div>
-  
+
+        <br>
+
+        <div class="row">
+          <div class="col-md-12">
+            <label for="lastName">インフォメーションタイトル</label>
+            <input type="text" class="form-control" id="title" name="title"  value="" >
+          </div>
+        </div>
+        
+
+        <br>
+        <div class="row">
+          <div class="col-md-12">
+            <label for="lastName">リンク部分</label>
+            <input type="text" class="form-control" id="link_part" name="link_part"  value="" >
+          </div>
+        </div>
+        
+        <hr class="mb-4">
+        <button class="btn btn-primary btn-lg btn-block" type="submit">作成</button>
+      </form>
+    </div>
+
+
+     
+
     </main>
   </div>
 </div>

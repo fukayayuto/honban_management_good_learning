@@ -88,16 +88,10 @@ foreach ($emailData as $k => $val) {
                             <a class="nav-link" href="/management/reserve">
                                 <span data-feather="file"></span>
                                 <!-- Orders -->
-                                予約講座
+                                予約状況
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/management/reservation">
-                                <span data-feather="file"></span>
-                                <!-- Orders -->
-                                予約状況管理
-                            </a>
-                        </li>
+                       
                         <li class="nav-item">
                             <a class="nav-link" href="/management/account">
                                 <span data-feather="users"></span>
@@ -138,8 +132,8 @@ foreach ($emailData as $k => $val) {
                         <table class="table">
                             <thead>
                                 <tr class="success">
-                                    　 　<td>ID</td>
-                                    　　　<td>種類</td>
+                                　　<td>ID</td>
+                                    <td>種類</td>
                                     <td>日付</td>
                                     <td>宛先</td>
                                     <td>本文</td>

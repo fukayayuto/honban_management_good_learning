@@ -47,16 +47,10 @@ $count= $reverve_data['count'];
             <a class="nav-link" href="/management/reserve">
               <span data-feather="file"></span>
               <!-- Orders -->
-              予約講座
+              予約状況
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/management/reservation">
-              <span data-feather="file"></span>
-              <!-- Orders -->
-              予約状況管理
-            </a>
-          </li>
+         
           <li class="nav-item">
             <a class="nav-link" href="/management/mail">
               <span data-feather="shopping-cart"></span>

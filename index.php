@@ -1,3 +1,4 @@
+
 <html lang="ja" >
   <head>
     <title>グットラーニング管理画面</title>
@@ -30,16 +31,10 @@
             <a class="nav-link" href="/management/reserve">
               <span data-feather="file"></span>
               <!-- Orders -->
-              予約講座
+              予約状況
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/management/reservation">
-              <span data-feather="file"></span>
-              <!-- Orders -->
-              予約状況管理
-            </a>
-          </li>
+       
           <li class="nav-item">
             <a class="nav-link" href="/management/account">
               <span data-feather="users"></span>
@@ -70,6 +65,7 @@
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <!-- <h1 class="h2">Dashboard</h1> -->
         <h1 class="h2">管理画面</h1>
+        <a href="/management/entry/index.php"><button　type="button" class="btn btn-primary">全予約一覧</button></a>
       </div>
 
       <div id="app">

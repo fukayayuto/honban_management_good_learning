@@ -55,13 +55,6 @@ $updated_at = $account[0]['updated_at'];
             <a class="nav-link" href="/management/reserve">
               <span data-feather="file"></span>
               <!-- Orders -->
-              予約講座
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/management/reservation">
-              <span data-feather="file"></span>
-              <!-- Orders -->
               予約状況管理
             </a>
           </li>

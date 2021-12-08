@@ -152,6 +152,23 @@ function reseveStore($place,$start_date){
     return $res;
 }
 
+function getTomorrowData($date){
+
+    $pdo = dbConect();
+
+    $stmt = $pdo->prepare("SELECT * FROM reservation_settings WHERE start_date = :date");
+    $stmt->bindValue(':date', $date, PDO::PARAM_STR);
+    $res = $stmt->execute();
+    
+    if( $res ) {
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    $pdo = null;
+
+    return $data;
+}
+
 
 
 

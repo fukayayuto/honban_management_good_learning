@@ -1,29 +1,30 @@
 <div class="container">
-    <table class="table">
-        <thead>
-            <tr class="success">
-                <th>ユーザーID</th>
-                <th>氏名</th>
-                <th>メールアドレス</th>
-                <th>会社名</th>
-                <th>営業所</th>
-                <th>電話番号</th>
-                <th>更新日時</th>
-            </tr>
-        </thead>
+    <form action="#" method="POST">
 
-        <tbody>
-            <?php foreach ($data as $k => $val) : ?>
-                <tr>
-                    <td><a href="/management/account/detail/?id=<?php echo $val['id']; ?>"><?php echo $val['id']; ?></a></td>
-                    <td><?php echo $val['name']; ?></td>
-                    <td><?php echo $val['email']; ?></td>
-                    <td><?php echo $val['company_name']; ?></td>
-                    <td><?php echo $val['sales_office']; ?></td>
-                    <td><?php echo $val['phone']; ?></td>
-                    <td><?php echo $val['updated_at']; ?></td>
+        <h2>メール履歴一覧</h2><br>
+
+        <table class="table">
+            <thead>
+                <tr class="success">
+                    　 　<td>ID</td>
+                    　　　<td>種類</td>
+                    <td>日付</td>
+                    <td>宛先</td>
+                    <td>本文</td>
                 </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+            </thead>
+
+            <tbody>
+                <?php foreach ($data as $k => $val) : ?>
+                    <tr>
+                        　　　<td><?php echo $val['id']; ?></td>
+                        <td><?php echo $val['type']; ?></td>
+                        <td><?php echo $val['created_at']; ?></td>
+                        <td><?php echo $val['account_list']; ?></td>
+                        <td><a href="/management/mail/detail/?id=<?php echo $val['content_id']; ?>"><?php echo $val['title']; ?></a></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </form>
 </div>

@@ -60,13 +60,6 @@ foreach ($account_data as $k => $val) {
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/management/reservation">
-              <span data-feather="file"></span>
-              <!-- Orders -->
-              予約状況管理
-            </a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="/management/account">
               <span data-feather="users"></span>
               <!-- Products -->
@@ -99,33 +92,42 @@ foreach ($account_data as $k => $val) {
       </div>
 
       <div class="container">
-        <table class="table">
-            <thead>
-                <tr class="success">
-                    <th>ユーザーID</th>
-                    <th>氏名</th>
-                    <th>メールアドレス</th>
-                    <th>会社名</th>
-                    <th>営業所</th>
-                    <th>電話番号</th>
-                    <th>更新日時</th>
-                </tr>
-            </thead>
 
-            <tbody>
-                <?php foreach ($data as $k => $val) : ?>
-                    <tr>
-                        <td><a href="/management/account/detail/?id=<?php echo $val['id']; ?>"><?php echo $val['id']; ?></a></td>
-                        <td><?php echo $val['name']; ?></td>
-                        <td><?php echo $val['email']; ?></td>
-                        <td><?php echo $val['company_name']; ?></td>
-                        <td><?php echo $val['sales_office']; ?></td>
-                        <td><?php echo $val['phone']; ?></td>
-                        <td><?php echo $val['updated_at']; ?></td>
+      <form action="/management/mail/check.php" method="post">
+            <a href="/management/mail/check.php"><button type="button" class="btn btn-primary"> 全員に一斉メールを送信する</button></a>
+            <button type="submit" class="btn btn-primary"> 選択したユーザーにメールを送信する</button>
+
+            <table class="table">
+                <thead>
+                    <tr class="success">
+                        <th></th>
+                        <th>ユーザーID</th>
+                        <th>氏名</th>
+                        <th>メールアドレス</th>
+                        <th>会社名</th>
+                        <th>営業所</th>
+                        <th>電話番号</th>
+                        <th>更新日時</th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+                </thead>
+
+                <tbody>
+                    <?php foreach ($data as $k => $val) : ?>
+                        <tr>
+                            <td><input type="checkbox" id="check" name="check[][id]" value="<?php echo $val['id'];?>"></td>
+                            <td><a href="/management/account/detail/?id=<?php echo $val['id']; ?>"><?php echo $val['id']; ?></a></td>
+                            <td><?php echo $val['name']; ?></td>
+                            <td><?php echo $val['email']; ?></td>
+                            <td><?php echo $val['company_name']; ?></td>
+                            <td><?php echo $val['sales_office']; ?></td>
+                            <td><?php echo $val['phone']; ?></td>
+                            <td><?php echo $val['updated_at']; ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+
+        </form>
    　　</div>
 
     </main>

@@ -87,6 +87,23 @@ function updateAccount($id,$name,$email,$company_name,$sales_office,$phone,$memo
     return $res;
 }
 
+function emailSearch($email){
+    
+    $pdo = dbConect();
+
+    $stmt = $pdo->prepare("SELECT * FROM accounts WHERE email = :email" );
+    $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+    $res = $stmt->execute();
+
+    if( $res ) {
+        $data = $stmt->fetch();
+    }
+
+    $pdo = NULL;
+
+    return $data;
+}
+
 
 
 

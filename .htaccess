@@ -5,4 +5,4 @@ AuthUserFile /Applications/MAMP/htdocs/tmp/management/.htpasswd
 AuthName "Please enter your ID and password"
 require valid-user
 
-RewriteRule ^reservation/detail/?1 http://localhost:8888/management/reservation/detail.php
+RewriteRule ^reservation/detail/?1 /home/tokyo-mytour/www/promote.good-learning.jp/management/reservation/detail.php

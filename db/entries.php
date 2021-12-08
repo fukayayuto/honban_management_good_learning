@@ -58,5 +58,61 @@ function selectAccount($account_id){
     return $data;
 }
 
+function getEntryAll(){
+    
+    $pdo = dbConect();
+
+    $stmt = $pdo->prepare("SELECT * FROM entries ORDER BY id DESC ");
+    $res = $stmt->execute();
+
+    $data = null;
+    
+    if( $res ) {
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    $pdo = null;
+
+    return $data;
+}
+
+function selectEntry($id){
+    
+    $pdo = dbConect();
+
+    $stmt = $pdo->prepare("SELECT * FROM entries WHERE id = :id ");
+    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+    $res = $stmt->execute();
+
+    $data = null;
+    
+    if( $res ) {
+        $data = $stmt->fetch();
+    }
+    $pdo = null;
+
+    return $data;
+}
+
+function updateEntry($entry_id,$status){
+    
+    $pdo = dbConect();
+
+    date_default_timezone_set('Asia/Tokyo');
+    $date = date("Y-m-d H:i:s");
+
+    $stmt = $pdo->prepare("UPDATE entries SET  status = :status, updated_at = :updated_at  WHERE  id = :id;");
+        $stmt->bindValue(':id', $entry_id, PDO::PARAM_INT);
+        $stmt->bindValue(':status', $status, PDO::PARAM_INT);
+        $stmt->bindValue(':updated_at', $date, PDO::PARAM_STR);
+        $res = $stmt->execute();
+
+    
+    $pdo = null;
+
+    return $res;
+}
+
+
+
 
 ?>
