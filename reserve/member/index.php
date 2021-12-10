@@ -67,6 +67,8 @@
         <a href="/management/reserve/member/create.php"><button　type="button" class="btn btn-primary">予約作成</button></a>
 
       </div>
+         <a href="/management/entry/list.php?place=1"><button　type="button" class="btn btn-primary">申し込み一覧表示</button></a>
+         <a href="/management/reserve/list.php?place=1"><button　type="button" class="btn btn-primary">予約一覧表示</button></a>
 
 
       <div id="app">

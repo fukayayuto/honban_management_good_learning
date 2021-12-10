@@ -14,7 +14,7 @@ $data = array();
 
 $reservation_data = getReservation($id);
 $reserve_data = getReservatinData($reservation_data['place']);
-
+$reservation_id = $reservation_data['id'];
 $reservation_name = $reserve_data['name'];
 $reservation_name = mb_substr($reservation_name, 0,25);
 $progress = $reserve_data['progress'];
@@ -31,13 +31,16 @@ $entry_data = array();
 if(!empty($entry)){
     foreach ($entry as $k => $item) {
         $tmp = array();
-        $account_data = getAccount($item['id']);
+        $account_data = getAccount($item['account_id']);
+        $tmp['id'] = $item['id'];
+        $tmp['account_id'] = $account_data[0]['id'];
         $tmp['name'] = $account_data[0]['name'];
         $tmp['status'] = $item['status'];
         $tmp['count'] = $item['count'];
         $tmp['created_at'] = $item['created_at'];
-        $left_seat = $left_seat - $item['count'];
-
+        if($item['status'] != 2){
+          $left_seat = $left_seat - $item['count'];
+        }
         $entry_data[$k] = $tmp;
     }
 }
@@ -109,6 +112,7 @@ if(!empty($entry)){
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <!-- <h1 class="h2">Dashboard</h1> -->
         <h1 class="h2">予約状況</h1>
+
       </div>
 
       <div class="container">
@@ -121,6 +125,7 @@ if(!empty($entry)){
                     <th>所用日数</th>
                     <th>定員枠</th>
                     <th>残り定員枠</th>
+                    <th></th>
                 </tr>
             </thead>
 
@@ -131,6 +136,7 @@ if(!empty($entry)){
                     <td><?php echo $progress;?>日</td>
                     <td><?php echo $count;?>人</td>
                     <td><?php echo $left_seat;?>人</td>
+                    <td><a href="/management/reserve/edit.php?id=<?php echo $reservation_id;?>"><button　type="button" class="btn btn-primary">予約内容を変更する</button></a></td>
                     
                 </tr>
             </tbody>          
@@ -153,15 +159,17 @@ if(!empty($entry)){
                 <tr>
                     <td><?php echo $val['created_at'];?></td>
                     <td><?php echo $val['count'];?></td>
-                    <td><?php echo $val['name'];?></td>
+                    <td><a href="/management/account/detail/?id=<?php echo $val['account_id'];?>"><?php echo $val['name'];?></a></td>
                     <td></td>
                     
                     <?php if(($val['status']) == 0):?>
-                        <td><button　type="button" class="btn btn-danger">未確定</button></td>
+                        <td><button　type="button" class="btn btn-warning">未確定</button></td>
                     <?php elseif(($val['status']) == 1):?>
                         <td><button　type="button" class="btn btn-success">確定</button></td>
+                    <?php elseif(($val['status']) == 2):?>
+                      <td><button　type="button" class="btn btn-danger">キャンセル</button></td>
                     <?php endif;?>
-                    <td><button　type="button" class="btn btn-primary">詳細</button></td>
+                    <td><a href="/management/entry/detail/?id=<?php echo $val['id'];?>"><button　type="button" class="btn btn-primary">詳細</button></a></td>
                     
                 </tr>
                 <?php endforeach;?>

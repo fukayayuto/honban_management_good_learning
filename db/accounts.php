@@ -104,6 +104,60 @@ function emailSearch($email){
     return $data;
 }
 
+function getSearchFromName($name){
+    
+    $pdo = dbConect();
+    $name = '%' . $name . '%';
+
+    $stmt = $pdo->prepare("SELECT * FROM accounts WHERE name like :name" );
+    $stmt->bindValue(':name', $name, PDO::PARAM_STR);
+    $res = $stmt->execute();
+
+    if( $res ) {
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    $pdo = NULL;
+
+    return $data;
+}
+
+function getSearchFromEmail($email){
+    
+    $pdo = dbConect();
+    $email = '%' . $email . '%';
+
+    $stmt = $pdo->prepare("SELECT * FROM accounts WHERE email like :email" );
+    $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+    $res = $stmt->execute();
+
+    if( $res ) {
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    $pdo = NULL;
+
+    return $data;
+}
+
+function getSearchFromCompanyname($company_name){
+    
+    $pdo = dbConect();
+    $company_name = '%' . $company_name . '%';
+
+    $stmt = $pdo->prepare("SELECT * FROM accounts WHERE company_name like :company_name" );
+    $stmt->bindValue(':company_name', $company_name, PDO::PARAM_STR);
+    $res = $stmt->execute();
+
+    if( $res ) {
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    $pdo = NULL;
+
+    return $data;
+}
+
 
 
 

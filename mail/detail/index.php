@@ -100,17 +100,17 @@ $data['account_list'] = '';
             <h2>送信内容</h2><br>
 
             <div class="form-group">
-                <label>宛先</label><br>
+                <h4>宛先</h4><br>
                 <label><?php echo $data['account_list'];?></label>
             </div>
 
             <div class="form-group">
-                <label>タイトル</label><br>
+                <h4>件名</h4><br>
                 <label><?php echo $data['title'];?></label>
             </div>
 
             <div class="form-group">
-                <label>メール本文</label><br>
+                <h4>メール本文</h4><br>
                 <label style="white-space:pre-wrap;"><?php echo $data['mail_text'];?></label>
             </div>
             <div class="form-group">

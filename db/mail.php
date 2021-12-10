@@ -129,6 +129,27 @@ function getAccountList($adress_id){
      return $data;
 }
 
+function emailContentStoreAuto($adress_id){
+    
+    $pdo = dbConect();
+
+     $stmt = $pdo->prepare("INSERT INTO email_contents (
+             adress_id
+         ) VALUES (
+            :adress_id
+          )");
+     $stmt->bindValue(':adress_id', $adress_id, PDO::PARAM_INT);
+     $res = $stmt->execute();
+
+     $id = 1;
+     if( $res ) {
+         $id = $pdo -> lastInsertId();
+     }
+     
+     $pdo = null;
+ 
+     return $id;
+}
 
 
 

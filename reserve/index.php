@@ -8,7 +8,6 @@ $reserve_data = getReserveAll();
 
 ?>
 
-
 <html lang="ja" >
   <head>
     <title>グットラーニング管理画面</title>
@@ -16,7 +15,6 @@ $reserve_data = getReserveAll();
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP&display=swap" rel="stylesheet">
     <link href="dashboard.css" rel="stylesheet">
     <link href="../example.css" rel="stylesheet">
-
   </head>
   <body >
 

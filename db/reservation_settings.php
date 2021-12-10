@@ -71,38 +71,38 @@ function getReservation($id){
     return $data;
 }
 
-function updateReservation($place,$start_date,$progress,$count,$display_flg,$id){
+// function updateReservation($place,$start_date,$progress,$count,$display_flg,$id){
 
-    $pdo = dbConect();
-    $id_2 = $id++;
+//     $pdo = dbConect();
+//     $id_2 = $id++;
 
-    if($place != 1){
-        $stmt = $pdo->prepare("UPDATE reservation_settings SET  place = :place, start_date = :start_date, progress = :progress, count = :count, display_flg = :display_flg WHERE  id = :id;");
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-        $stmt->bindValue(':place', $place, PDO::PARAM_INT);
-        $stmt->bindValue(':start_date', $start_date, PDO::PARAM_STR);
-        $stmt->bindValue(':progress', $progress, PDO::PARAM_INT);
-        $stmt->bindValue(':count', $count, PDO::PARAM_INT);
-        $stmt->bindValue(':display_flg', $display_flg, PDO::PARAM_INT);
-        $res = $stmt->execute();
+//     if($place != 1){
+//         $stmt = $pdo->prepare("UPDATE reservation_settings SET  place = :place, start_date = :start_date, progress = :progress, count = :count, display_flg = :display_flg WHERE  id = :id;");
+//         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+//         $stmt->bindValue(':place', $place, PDO::PARAM_INT);
+//         $stmt->bindValue(':start_date', $start_date, PDO::PARAM_STR);
+//         $stmt->bindValue(':progress', $progress, PDO::PARAM_INT);
+//         $stmt->bindValue(':count', $count, PDO::PARAM_INT);
+//         $stmt->bindValue(':display_flg', $display_flg, PDO::PARAM_INT);
+//         $res = $stmt->execute();
 
-    }else{
+//     }else{
 
-        $stmt = $pdo->prepare("UPDATE reservation_settings SET  place = :place, start_date = :start_date, progress = :progress, count = :count, display_flg = :display_flg WHERE  id = :id or id = :id_2;");
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-        $stmt->bindValue(':id_2', $id_2, PDO::PARAM_INT);
-        $stmt->bindValue(':place', $place, PDO::PARAM_INT);
-        $stmt->bindValue(':start_date', $start_date, PDO::PARAM_STR);
-        $stmt->bindValue(':progress', $progress, PDO::PARAM_INT);
-        $stmt->bindValue(':count', $count, PDO::PARAM_INT);
-        $stmt->bindValue(':display_flg', $display_flg, PDO::PARAM_INT);
-        $res = $stmt->execute();
-    }
+//         $stmt = $pdo->prepare("UPDATE reservation_settings SET  place = :place, start_date = :start_date, progress = :progress, count = :count, display_flg = :display_flg WHERE  id = :id or id = :id_2;");
+//         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+//         $stmt->bindValue(':id_2', $id_2, PDO::PARAM_INT);
+//         $stmt->bindValue(':place', $place, PDO::PARAM_INT);
+//         $stmt->bindValue(':start_date', $start_date, PDO::PARAM_STR);
+//         $stmt->bindValue(':progress', $progress, PDO::PARAM_INT);
+//         $stmt->bindValue(':count', $count, PDO::PARAM_INT);
+//         $stmt->bindValue(':display_flg', $display_flg, PDO::PARAM_INT);
+//         $res = $stmt->execute();
+//     }
 
-    $pdo = null;
+//     $pdo = null;
 
-    return $res;
-}
+//     return $res;
+// }
 
 function getSelectAll($place){
     
@@ -152,12 +152,28 @@ function reseveStore($place,$start_date){
     return $res;
 }
 
-function getTomorrowData($date){
+function getTomorrowData(){
 
-    $pdo = dbConect();
+    $dsn = 'mysql:dbname=e_learning;host=localhost';
+    $user = 'root';
+    $password = 'root';
 
-    $stmt = $pdo->prepare("SELECT * FROM reservation_settings WHERE start_date = :date");
-    $stmt->bindValue(':date', $date, PDO::PARAM_STR);
+    try {
+        /// DB接続を試みる
+        $pdo = null;
+        $pdo = new PDO($dsn, $user, $password);
+        $msg = "MySQL への接続確認が取れました。";
+        } catch (PDOException $e) {
+        $isConnect = false;
+        die("MySQL への接続に失敗しましたd。");
+        $msg       = "MySQL への接続に失敗しました。<br>(" . $e->getMessage() . ")";
+        }
+
+    date_default_timezone_set ('Asia/Tokyo');
+    $start_date = date('Y-m-d', strtotime('+1 day'));
+  
+    $stmt = $pdo->prepare("SELECT * FROM reservation_settings WHERE start_date = :start_date");
+    $stmt->bindValue(':start_date', $start_date, PDO::PARAM_STR);
     $res = $stmt->execute();
     
     if( $res ) {
@@ -170,6 +186,38 @@ function getTomorrowData($date){
 }
 
 
+function updateReservation($id,$start_date,$place){
+
+        $pdo = dbConect();
+    
+        if($place == 11){
+            $stmt = $pdo->prepare("UPDATE reservation_settings SET start_date = :start_date WHERE  id = :id;");
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+            $stmt->bindValue(':start_date', $start_date, PDO::PARAM_STR);
+            $res = $stmt->execute();
+
+            $pdo = null;
+            return $res;
+        }
+
+        if($place == 1){
+            $stmt = $pdo->prepare("UPDATE reservation_settings SET start_date = :start_date WHERE  id = :id;");
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+            $stmt->bindValue(':start_date', $start_date, PDO::PARAM_STR);
+            $res = $stmt->execute();
+
+            $id++;
+            $stmt = $pdo->prepare("UPDATE reservation_settings SET start_date = :start_date WHERE  id = :id;");
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+            $stmt->bindValue(':start_date', $start_date, PDO::PARAM_STR);
+            $res = $stmt->execute();
+
+            $pdo = null;
+            return $res;
+
+        }
+       
+    }
 
 
 

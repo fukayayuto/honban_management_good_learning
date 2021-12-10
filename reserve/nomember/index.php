@@ -64,9 +64,10 @@
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <!-- <h1 class="h2">Dashboard</h1> -->
         <h1 class="h2">管理画面</h1>
-        <a href="/management/reserve/member/create.php"><button　type="button" class="btn btn-primary">予約作成</button></a>
-
       </div>
+
+      <a href="/management/entry/list.php?place=2"><button　type="button" class="btn btn-primary">予約一覧表示</button></a>
+
 
       <div id="app">
    　　    <div class="m-auto">

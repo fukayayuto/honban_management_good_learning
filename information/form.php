@@ -103,6 +103,26 @@ $information_data = getInformation();
             <input type="text" class="form-control" id="link_part" name="link_part"  value="" >
           </div>
         </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <label for="lastName">表示フラグ</label>
+            <select name="display_flg" id="display_flg" class="form-control">
+                <option value="0">非表示</option>
+                <option value="1" selected>表示</option>
+              </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <label for="lastName">優先度</label>
+            <select name="priority" id="priority" class="form-control">
+                <option value="0" selected>通常</option>
+                <option value="1">優先</option>
+              </select>
+          </div>
+        </div>
         
         <hr class="mb-4">
         <button class="btn btn-primary btn-lg btn-block" type="submit">作成</button>

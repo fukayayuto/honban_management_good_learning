@@ -38,7 +38,7 @@ if(!empty($_POST)){
 
 ?>
 
-<
+
 
 
     <html lang="ja" >

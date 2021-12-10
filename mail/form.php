@@ -20,6 +20,24 @@ if(!empty($_POST)){
     $account_list = mb_substr($account_list,1);
 }
 
+if(!empty($_GET['id'])){
+    $id = $_GET['id'];
+    $account_list = '';
+    $data = array();
+    $tmp = array();
+    $tmp['account_id'] = $id;
+
+    $account = getAccount($id);
+
+    $account_list .= ',　' . $account[0]['name'];
+    $data[0] = $tmp;
+    $account_list = mb_substr($account_list,1);
+
+
+}
+
+
+
 ?>
 
 

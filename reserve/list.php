@@ -1,25 +1,50 @@
 <?php
 
 ini_set('display_errors', "On");
+require_once "../db/reservation_settings.php"; 
+require_once "../db/reservation.php"; 
+require_once "../db/entries.php";
 require_once "../db/accounts.php";
 
-$account_id_list = $_POST['account_id'];
-$account_list = '';
+if(empty($_GET['place'])){
+    
+}
+
+$place = $_GET['place'];
+
+$reserve_data = getReservatinData($place);
+$reservation_name = $reserve_data['name'];
+$count = $reserve_data['count'];
+
+$reservation_data = getSelectAll($place);
+
 $data = array();
 
-foreach ($account_id_list as $k => $val) {
+foreach ($reservation_data as $k => $val){
     $tmp = array();
-    $tmp['account_id'] = $val;
-    $account_data = getAccount($val);
-    $account_list .= ',' . $account_data[0]['name'];
+
+    $tmp['id'] = $val['id'];
+
+    $start_date = new DateTime($val['start_date']);
+    $tmp['start_date'] = $start_date->format('Y年m月d日');
+
+    $created_at = new DateTime($val['created_at']);
+    $tmp['created_at'] = $created_at->format('Y年m月d日');
+
+    $tmp['created_at'] = $val['created_at'];
+    $tmp['seat'] = $count;
+    $tmp['count'] =  $count;
+
+    $entry_data = getEntry($val['id']);
+
+    foreach ($entry_data as $entry){
+        $tmp['count'] = $tmp['count'] -  $entry['count'];
+    }
     $data[$k] = $tmp;
 }
-$account_list = mb_substr($account_list, 1);
-$title = $_POST['title'];
-$mail_text_list = $_POST['mail_text'];
-$mail_text = $_POST['mail_text'];
 
-$mail_text_list = explode("\n", $mail_text_list);
+
+
 
 
 ?>
@@ -63,7 +88,7 @@ $mail_text_list = explode("\n", $mail_text_list);
                                 予約状況
                             </a>
                         </li>
-                      
+
                         <li class="nav-item">
                             <a class="nav-link" href="/management/account">
                                 <span data-feather="users"></span>
@@ -93,54 +118,42 @@ $mail_text_list = explode("\n", $mail_text_list);
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <!-- <h1 class="h2">Dashboard</h1> -->
-                    <h1 class="h2">インフォメーション一覧</h1>
+                    <h1 class="h2">管理画面</h1>
+                    <a href="/management/entry/index.php"><button　type="button" class="btn btn-primary">全予約一覧</button></a>
                 </div>
 
                 <div class="container">
+                    <table class="table">
+                        <thead>
+                           <tr class="success">
+                             <h4><?php echo $reservation_name;?></h4>
+                            </tr>
+                            <tr class="success">
+                                    <th>開始日</th>
+                                    <th>予約枠</th>
+                                    <th>予約人数</th>
+                                    <th>作成日</th>
+                                    <th></th>
+                            </tr>
+                        </thead>
 
-                    <form action="store.php" method="post">
-
-                        <?php foreach ($data as $val) : ?>
-                            <input type="hidden" name="account_id[]" id="account_id[]" value="<?php echo $val['account_id']; ?> ">
-                        <?php endforeach; ?>
-
-                        <input type="hidden" name="title" id="title" value="<?php echo $title; ?> ">
-                        <input type="hidden" name="mail_text" id="mail_text" value="<?php echo $mail_text; ?> ">
-
-
-                        <div class="form-group">
-                            <h>宛先</h4>
-                            <p><?php echo $account_list; ?></p>
-                        </div>
-
-                        <div class="form-group">
-                            <h4>タイトル</h4>
-                            <p><?php echo $title; ?></p>
-                        </div>
-
-                        <div class="form-group">
-                            <h4>メール本文</h4>
-                        </div>
-
-                        <p>
-                            <?php foreach ($mail_text_list as $text):?>
-                                <?php echo $text;?><br>
-                            <?php endforeach;?>
-                            
-                        </p>
-
-                        <!-- <p　style="white-space: pre-wrap;"><?php echo $mail_text; ?></p><br> -->
-
-                        <button type="submit" class="btn btn-primary">送信する</button>
-
-                    </form>
-
+                        <tbody>
+                            <?php foreach ($data as $k => $val) : ?>
+                                <tr>
+                                    <td><?php echo $val['start_date']; ?></td>
+                                    <td><?php echo $val['seat']; ?></td>
+                                    <td><?php echo $val['count']; ?></td>
+                                    <td><?php echo $val['created_at']; ?></td>
+                                    <td><a href="/management/reserve/list/?id=<?php echo $val['id'];?>"><button　type="button" class="btn btn-primary">詳細</button></a></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
                 </div>
 
             </main>
         </div>
     </div>
-
 
     <!-- Icons -->
     <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>

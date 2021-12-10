@@ -100,7 +100,7 @@ $count= $reverve_data['count'];
         <br>
         <div class="row">
           <div class="col-md-12">
-            <label for="lastName">講座枠数: <?php echo $count;?>日間</label><br>
+            <label for="lastName">講座枠数: <?php echo $count;?>人</label><br>
           </div>
         </div>
         <br>

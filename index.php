@@ -6,11 +6,11 @@
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP&display=swap" rel="stylesheet">
     <link href="dashboard.css" rel="stylesheet">
     <link href="../example.css" rel="stylesheet">
-    <link href='http://localhost:8888/management/fullcalendar-5.10.1/lib/main.css' type="text/css" rel='stylesheet' />
-    <link href='http://localhost:8888/management/fullcalendar-5.10.1/lib/main.min.css' type="text/css" rel='stylesheet' />
+    <link href='https://promote.good-learning.jp/management/fullcalendar-5.10.1/lib/main.css' type="text/css" rel='stylesheet' />
+    <link href='https://promote.good-learning.jp/management/fullcalendar-5.10.1/lib/main.min.css' type="text/css" rel='stylesheet' />
  
-    <script src="http://localhost:8888/management/fullcalendar-5.10.1/lib/main.js"></script>
-    <script src="http://localhost:8888/management/fullcalendar-5.10.1/lib/main.min.js"></script>
+    <script src="https://promote.good-learning.jp/management/fullcalendar-5.10.1/lib/main.js"></script>
+    <script src="https://promote.good-learning.jp/management/fullcalendar-5.10.1/lib/main.min.js"></script>
 
   </head>
   <body >

@@ -112,6 +112,23 @@ function updateEntry($entry_id,$status){
     return $res;
 }
 
+function SelectPlaceEntry($place){
+    
+    $pdo = dbConect();
+
+    $stmt = $pdo->prepare("SELECT * FROM entries WHERE place = :place ");
+    $stmt->bindValue(':place', $place, PDO::PARAM_INT);
+    $res = $stmt->execute();
+
+    $data = null;
+    
+    if( $res ) {
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    $pdo = null;
+
+    return $data;
+}
 
 
 

@@ -86,6 +86,7 @@ $information_data = getInformation();
                    <th>タイトル</th>
                    <th>URL部分</th>
                    <th>表示フラグ</th>
+                   <th>優先度</th>
                    <th>更新日時</th>
                    <th></th>
                 </tr>
@@ -95,13 +96,18 @@ $information_data = getInformation();
                 <?php foreach ($information_data as $k => $val) :?>
                     <tr>
                         <td><?php echo $val['id'];?></td>
-                        <td><a href="<?php echo $val['link'];?>"><?php echo $val['link'];?></a></td>
+                        <td width="50"><a href="<?php echo $val['link'];?>"><?php echo $val['link'];?></a></td>
                         <td><?php echo $val['title'];?></td>
                         <td><?php echo $val['link_part'];?></td>
                         <?php if($val['display_flg'] == 1) :?>
                             <td>表示</td>
                         <?php else :?>
                             <td>非表示</td>
+                        <?php endif;?>
+                        <?php if($val['priority'] == 0) :?>
+                            <td>通常</td>
+                        <?php elseif($val['priority'] == 1) :?>
+                            <td>優先</td>
                         <?php endif;?>
                         <td><?php echo $val['updated_at'];?></td>
                         <td><a href="/management/information/detail?id=<?php echo $val['id'];?>"><button　type="button" class="btn btn-primary">変更</button></a></td>

@@ -12,8 +12,8 @@ $title = $_POST['title'];
 $link = $_POST['link'];
 $link_part = $_POST['link_part'];
 $display_flg = $_POST['display_flg'];
-
-$res = updateInformation($title,$link,$link_part,$display_flg,$id);
+$priority = $_POST['priority'];
+$res = updateInformation($title,$link,$link_part,$display_flg,$id,$priority);
 
 if(!$res){
     die('更新に失敗しました');

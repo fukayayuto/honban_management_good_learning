@@ -3,8 +3,38 @@
 ini_set('display_errors', "On");
 require_once "../db/accounts.php"; 
 
-$account_data = getAccountAll();
+$count = 0;
 $data = array();
+
+$name = '';
+$email = '';
+$company_name = '';
+if(!empty($_GET['name'])){
+
+    $count++;
+    $name = $_GET['name'];
+    $account_data = getSearchFromName($name);
+}
+
+if(!empty($_GET['email'])){
+
+    $count++;
+    $email = $_GET['email'];
+    var_dump($email);
+    die();
+    $account_data = getSearchFromEmail($email);
+
+}
+if(!empty($_GET['company_name'])){
+    $count++;
+    $company_name = $_GET['company_name'];
+    $account_data = getSearchFromCompanyname($company_name);
+
+}
+
+if($count <= 0){
+    $account_data = getAccountAll();
+}
 
 foreach ($account_data as $k => $val) {
     $tmp = array();
@@ -21,6 +51,10 @@ foreach ($account_data as $k => $val) {
     
     $data[$k] = $tmp;
 }
+
+
+   
+
 
 ?>
 
@@ -93,8 +127,15 @@ foreach ($account_data as $k => $val) {
 
       <div class="container">
 
+      <form action="/management/account" method="get">
+            <input type="text" name="name" id="name" placeholder="氏名" value="<?php echo $name;?>">
+            <input type="text" name="email" id="email" placeholder="メールアドレス" value="<?php echo $email;?>">
+            <input type="text" name="company_name" id="company_name" placeholder="会社名" value="<?php echo $company_name;?>">
+            <button type="submit" class="btn btn-secondary">検索</button>
+        </form>
+
       <form action="/management/mail/check.php" method="post">
-            <a href="/management/mail/check.php"><button type="button" class="btn btn-primary"> 全員に一斉メールを送信する</button></a>
+            <a href="/management/mail/check.php"><button type="button" class="btn btn-warning"> 全員に一斉メールを送信する</button></a>
             <button type="submit" class="btn btn-primary"> 選択したユーザーにメールを送信する</button>
 
             <table class="table">

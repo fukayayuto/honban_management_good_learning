@@ -16,8 +16,6 @@ $information_data = selectInformation($id);
 ?>
 
 
-?>
-
 <html lang="ja">
 
 <head>
@@ -119,6 +117,17 @@ $information_data = selectInformation($id);
                 <option value="1" <?php if ($information_data[0]['display_flg'] == 1) {
                                     echo 'selected';
                                   } ?>>表示</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>優先度</label>
+              <select name="priority" id="priority" class="form-control">
+                <option value="0" <?php if ($information_data[0]['priority'] == 0) {
+                                    echo 'selected';
+                                  } ?>>通常</option>
+                <option value="1" <?php if ($information_data[0]['priority'] == 1) {
+                                    echo 'selected';
+                                  } ?>>優先</option>
               </select>
             </div>
             <div class="form-group">

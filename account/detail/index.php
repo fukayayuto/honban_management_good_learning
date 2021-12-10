@@ -12,6 +12,7 @@ if (empty($_GET['id'])) {
 $id = $_GET['id'];
 
 $account = getAccount($id);
+$account_id = $account[0]['id'];
 $name = $account[0]['name'];
 $email = $account[0]['email'];
 $company_name = $account[0]['company_name'];
@@ -151,7 +152,7 @@ foreach ($entry_data as $k => $val) {
                 <tr>
                   <th scope="col">顧客情報</th>
                   <th scope="col"></th>
-                  <th scope="col"></th>
+                  <th scope="col"><a href="/management/reserve.php?id=<?php echo $account_id;?>"><button type="button" class="btn btn-primary">このユーザーで予約をする</button></a></th>
                 </tr>
               </thead>
               <tbody>
@@ -162,7 +163,7 @@ foreach ($entry_data as $k => $val) {
                 </tr>
                 <tr>
                   <td>メールアドレス</td>
-                  <td><?php echo $email; ?></td>
+                  <td><a href="/management/mail/form.php?id=1"><?php echo $email; ?></a></td>
                   <td></td>
                 </tr>
                 <tr>

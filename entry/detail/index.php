@@ -113,6 +113,8 @@ $memo = $account[0]['memo'];
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <!-- <h1 class="h2">Dashboard</h1> -->
                     <h1 class="h3">エントリー詳細</h1>
+                    <a href="/management/reserve/list/?id=<?php echo $reservation_id;?>"><button　type="button" class="btn btn-primary">予約状況へ戻る</button></a>
+
                 </div>
 
 

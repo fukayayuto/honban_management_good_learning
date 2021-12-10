@@ -1,3 +1,8 @@
+<?php
+
+$id = $_GET['id'];
+
+?>
 <html lang="ja" >
   <head>
     <title>グットラーニング管理画面</title>
@@ -5,11 +10,11 @@
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP&display=swap" rel="stylesheet">
     <link href="dashboard.css" rel="stylesheet">
     <link href="../example.css" rel="stylesheet">
-    <link href='https://promote.good-learning.jp/management/fullcalendar-5.10.1/lib/main.css' type="text/css" rel='stylesheet' />
-    <link href='https://promote.good-learning.jp/management/fullcalendar-5.10.1/lib/main.min.css' type="text/css" rel='stylesheet' />
+    <link href='http://localhost:8888/management/fullcalendar-5.10.1/lib/main.css' type="text/css" rel='stylesheet' />
+    <link href='http://localhost:8888/management/fullcalendar-5.10.1/lib/main.min.css' type="text/css" rel='stylesheet' />
  
-    <script src="https://promote.good-learning.jp/management/fullcalendar-5.10.1/lib/main.js"></script>
-    <script src="https://promote.good-learning.jp/management/fullcalendar-5.10.1/lib/main.min.js"></script>
+    <script src="http://localhost:8888/management/fullcalendar-5.10.1/lib/main.js"></script>
+    <script src="http://localhost:8888/management/fullcalendar-5.10.1/lib/main.min.js"></script>
 
   </head>
   <body >
@@ -33,17 +38,17 @@
               予約状況
             </a>
           </li>
-        
+       
           <li class="nav-item">
-            <a class="nav-link" href="/management/mail">
-              <span data-feather="shopping-cart"></span>
+            <a class="nav-link" href="/management/account">
+              <span data-feather="users"></span>
               <!-- Products -->
               顧客
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/management/user">
-              <span data-feather="users"></span>
+            <a class="nav-link" href="/management/mail">
+              <span data-feather="mail"></span>
               <!-- Customers -->
               メール配信
             </a>
@@ -64,9 +69,8 @@
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <!-- <h1 class="h2">Dashboard</h1> -->
         <h1 class="h2">管理画面</h1>
-          <a href="/management/reserve/mie/create.php"><button　type="button" class="btn btn-primary">予約作成</button></a>
+        <a href="/management/entry/index.php"><button　type="button" class="btn btn-primary">全予約一覧</button></a>
       </div>
-      <a href="/management/entry/list.php?place=11"><button　type="button" class="btn btn-primary">予約一覧</button></a>
 
       <div id="app">
    　　    <div class="m-auto">
@@ -81,6 +85,8 @@
 <script>
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
+            var id = <?php echo $id;?>;
+            console.log(id);
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
                 locale: 'ja',
@@ -98,7 +104,7 @@
                 },
                 noEventsContent: 'スケジュールはありません',
 
-                events: "setEvents.php",
+                events: "setEventReserve.php?id=" + id,
 
             });
             calendar.render();
@@ -112,36 +118,6 @@
 </script>
 
 <!-- Graphs -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-<script>
-  var ctx = document.getElementById("myChart");
-  var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-      datasets: [{
-        data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-        lineTension: 0,
-        backgroundColor: 'transparent',
-        borderColor: '#007bff',
-        borderWidth: 4,
-        pointBackgroundColor: '#007bff'
-      }]
-    },
-    options: {
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: false
-          }
-        }]
-      },
-      legend: {
-        display: false,
-      }
-    }
-  });
-</script>
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script>
@@ -154,32 +130,3 @@
 <script src="/docs/4.4/assets/js/src/ie-emulation-modes-warning.js"></script>
   </body>
 </html>
-
-
-<!-- 
-<!DOCTYPE html>
-<html lang="ja">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>管理画面</title>
-</head>
-
-<body>
-    <div class="container">
-        <br>
-        <a href="/management/reservation/">予約管理画面</a><br>
-        <a href="/management/information/">インフォメーション管理画面</a><br>
-        <a href="/management/user/">ユーザー管理画面</a><br>
-        <a href="/management/mail/">メール管理画面</a><br>
-    </div>
-</body>
-
-</html> -->
