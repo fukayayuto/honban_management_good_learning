@@ -6,6 +6,14 @@ require_once "../db/reservation.php";
 require_once "../db/entries.php";
 require_once "../db/accounts.php";
 
+if(!empty($_GET['place'])){
+    var_dump($_GET['place']);
+    die();
+}
+
+
+
+
 $entry_data = getEntryAll();
 
 $data = array();
@@ -113,6 +121,15 @@ foreach ($entry_data as $k => $entry) {
                 </div>
 
                 <div class="container">
+
+                <form action="/management/entry/index.php" method="get">
+                    <select name="place" id="place" class="form-control">
+                        <option value="1">初任者講習(会員)</option>
+                        <option value="2">初任者講習(非会員)</option>
+                        <option value="11">三重県会場</option>
+                    </select>
+                    <button type="submit" class="btn btn-secondary">検索</button>
+                </form>
                     <table class="table">
                         <thead>
                             <tr class="success">

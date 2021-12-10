@@ -16,7 +16,7 @@ $reserve_data = getReservatinData($place);
 $reservation_name = $reserve_data['name'];
 $count = $reserve_data['count'];
 
-$reservation_data = getSelectAll($place);
+$reservation_data = getSelectAllLast($place);
 
 $data = array();
 
@@ -38,7 +38,9 @@ foreach ($reservation_data as $k => $val){
     $entry_data = getEntry($val['id']);
 
     foreach ($entry_data as $entry){
+        if($entry != 2){
         $tmp['count'] = $tmp['count'] -  $entry['count'];
+        }
     }
     $data[$k] = $tmp;
 }
@@ -144,7 +146,7 @@ foreach ($reservation_data as $k => $val){
                                     <td><?php echo $val['seat']; ?></td>
                                     <td><?php echo $val['count']; ?></td>
                                     <td><?php echo $val['created_at']; ?></td>
-                                    <td><a href="/management/reserve/list/?id=<?php echo $val['id'];?>"><button　type="button" class="btn btn-primary">詳細</button></a></td>
+                                    <td><a href="/management/reserve/li/?id=<?php echo $val['id'];?>"><button　type="button" class="btn btn-primary">詳細</button></a></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

@@ -88,7 +88,7 @@ $data['account_list'] = '';
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <!-- <h1 class="h2">Dashboard</h1> -->
-        <h1 class="h2">インフォメーション一覧</h1>
+        <h1 class="h2">メール詳細</h1>
         <a href="/management/mail"><button　type="button" class="btn btn-primary">メール一覧に戻る</button></a>
 
 
@@ -100,22 +100,19 @@ $data['account_list'] = '';
             <h2>送信内容</h2><br>
 
             <div class="form-group">
-                <h4>宛先</h4><br>
-                <label><?php echo $data['account_list'];?></label>
+                <label class="border-bottom">宛先 : <?php echo $data['account_list'];?></label>
             </div>
 
             <div class="form-group">
-                <h4>件名</h4><br>
-                <label><?php echo $data['title'];?></label>
+                <label　class="border-bottom">件名 : <?php echo $data['title'];?></label>
             </div>
 
             <div class="form-group">
-                <h4>メール本文</h4><br>
-                <label style="white-space:pre-wrap;"><?php echo $data['mail_text'];?></label>
+                <label>本文</label><br>
+                <label class="border-bottom" style="white-space:pre-wrap;"><?php echo $data['mail_text'];?></label>
             </div>
             <div class="form-group">
-                <label>送信日時</label><br>
-                <label><?php echo $data['created_at'];?></label>
+                <label>送信日時 : <?php echo $data['created_at'];?></label><br>
             </div>
 
         </div>

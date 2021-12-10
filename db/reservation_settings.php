@@ -154,20 +154,7 @@ function reseveStore($place,$start_date){
 
 function getTomorrowData(){
 
-    $dsn = 'mysql:dbname=e_learning;host=localhost';
-    $user = 'root';
-    $password = 'root';
-
-    try {
-        /// DB接続を試みる
-        $pdo = null;
-        $pdo = new PDO($dsn, $user, $password);
-        $msg = "MySQL への接続確認が取れました。";
-        } catch (PDOException $e) {
-        $isConnect = false;
-        die("MySQL への接続に失敗しましたd。");
-        $msg       = "MySQL への接続に失敗しました。<br>(" . $e->getMessage() . ")";
-        }
+    $pdo = dbConect();
 
     date_default_timezone_set ('Asia/Tokyo');
     $start_date = date('Y-m-d', strtotime('+1 day'));
@@ -219,6 +206,22 @@ function updateReservation($id,$start_date,$place){
        
     }
 
+    function getSelectAllLast($place){
+    
+        $pdo = dbConect();
+    
+        $stmt = $pdo->prepare("SELECT * FROM reservation_settings WHERE place = :place OREDR BY start_date DESC");
+        $stmt->bindValue(':place', $place, PDO::PARAM_INT);
+        $res = $stmt->execute();
+        
+        if( $res ) {
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+    
+        $pdo = null;
+    
+        return $data;
+    }
 
 
 

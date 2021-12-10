@@ -16,6 +16,7 @@ $reservation_data = getReservation($id);
 $reserve_data = getReservatinData($reservation_data['place']);
 $reservation_id = $reservation_data['id'];
 $reservation_name = $reserve_data['name'];
+$place = $reserve_data['id'];
 $reservation_name = mb_substr($reservation_name, 0,25);
 $progress = $reserve_data['progress'];
 $count = $reserve_data['count'];
@@ -136,8 +137,11 @@ if(!empty($entry)){
                     <td><?php echo $progress;?>日</td>
                     <td><?php echo $count;?>人</td>
                     <td><?php echo $left_seat;?>人</td>
+                    <?if($place != 2):?>
                     <td><a href="/management/reserve/edit.php?id=<?php echo $reservation_id;?>"><button　type="button" class="btn btn-primary">予約内容を変更する</button></a></td>
-                    
+                    <?php else: ?>
+                      <td></td>
+                    <?php endif;?>
                 </tr>
             </tbody>          
         </table>

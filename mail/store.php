@@ -24,7 +24,7 @@ foreach ($account_id_list as $k => $account_id) {
    $mail_header	= "from:yosuke-saito@cab-station.com";
    $mailsousin = true;
 
-//    $mailsousin = mb_send_mail($mail_to, $mail_subject, $mail_body, $mail_header);
+   $mailsousin = mb_send_mail($mail_to, $mail_subject, $mail_body, $mail_header);
 
    if($mailsousin == false){
     die("送信に失敗しました");

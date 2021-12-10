@@ -109,25 +109,24 @@ $mail_text_list = explode("\n", $mail_text_list);
 
 
                         <div class="form-group">
-                            <h>宛先</h4>
-                            <p><?php echo $account_list; ?></p>
+                        <label class="border-bottom">宛先 : <?php echo $account_list;?></label>
                         </div>
 
                         <div class="form-group">
-                            <h4>タイトル</h4>
-                            <p><?php echo $title; ?></p>
+                        <label　class="border-bottom">件名 : <?php echo $title;?></label>
                         </div>
 
                         <div class="form-group">
-                            <h4>メール本文</h4>
-                        </div>
-
-                        <p>
+                            <label>本文</label>
+                            <p label class="border-bottom">
                             <?php foreach ($mail_text_list as $text):?>
                                 <?php echo $text;?><br>
                             <?php endforeach;?>
                             
-                        </p>
+                             </p>
+                        </div>
+
+                       
 
                         <!-- <p　style="white-space: pre-wrap;"><?php echo $mail_text; ?></p><br> -->
 

@@ -163,7 +163,7 @@ foreach ($entry_data as $k => $val) {
                 </tr>
                 <tr>
                   <td>メールアドレス</td>
-                  <td><a href="/management/mail/form.php?id=1"><?php echo $email; ?></a></td>
+                  <td><a href="/management/mail/form.php?id=<?php echo $account_id;?>"><?php echo $email; ?></a></td>
                   <td></td>
                 </tr>
                 <tr>

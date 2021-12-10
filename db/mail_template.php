@@ -22,7 +22,13 @@ function getMailTemplateAll(){
 
 function getMailTemplate($id){
     
-    $pdo = dbConect();
+    $username = 'root';
+    $password = 'root';
+    $pdo = new PDO("mysql:host=localhost;dbname=e_learning;",  $username,  $password
+               ,  array(
+                       PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'
+                      )
+              );
 
     $stmt = $pdo->prepare("SELECT * FROM mail_template WHERE id = :id");
     $stmt->bindValue(':id', $id, PDO::PARAM_INT);
